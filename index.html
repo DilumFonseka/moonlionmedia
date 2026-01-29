@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Moonlion Media</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Arial;}
+html{scroll-behavior:smooth;}
+body{background:#fff;color:#000;overflow:hidden;}
+
+/* NAVBAR */
+.navbar{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:80px;
+  background:#000;
+  padding:16px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:9999;
+}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo img{height:56px;transition:0.3s ease;}
+.logo:hover img{transform:scale(1.05);}
+.brand-name{color:#fff;font-size:22px;font-weight:700;}
+.nav-links{list-style:none;display:flex;}
+.nav-links li a{
+  color:#fff;text-decoration:none;margin-left:28px;position:relative;padding-bottom:6px;
+}
+.nav-links li a::after{
+  content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:#fff;transition:.4s ease;
+}
+.nav-links li a:hover::after{width:100%;}
+.menu-toggle{display:none;color:#fff;font-size:26px;cursor:pointer;}
+
+/* FOOTER */
+footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:52px;
+  background:#000;
+  color:#fff;
+  text-align:center;
+  line-height:52px;
+  z-index:9999;
+}
+
+/* SCROLL AREA */
+.main-content{
+  position:fixed;
+  top:80px;
+  bottom:52px;
+  width:100%;
+  overflow-y:auto;
+  scroll-behavior:smooth;
+}
+
+/* SLIDER */
+.slider{
+  height:100vh;
+  position:relative;
+  overflow:hidden;
+}
+.slide{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  transform:scale(1.1);
+  transition:opacity 1.2s ease, transform 6s ease;
+}
+.slide.active{opacity:1;transform:scale(1);}
+/* Typing Container */
+.typing-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 900px;
+  text-align: center;
+  z-index: 10;
+  font-family: "Segoe UI", Arial, sans-serif;
+  padding: 0 20px;
+}
+
+/* Heading with white border */
+.typed-heading {
+  font-size: 64px;
+  font-weight: 800;
+  margin-bottom: 25px;
+  background: linear-gradient(90deg, #1c1c1c, #4a4a4a); /* black → ash gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow:
+    2px 2px 0 #fff,   /* white outline */
+    -2px -2px 0 #fff,
+    2px -2px 0 #fff,
+    -2px 2px 0 #fff;
+  transition: all 0.5s ease;
+}
+
+/* Paragraph */
+/* Paragraph */
+.typed-paragraph {
+  font-size: 22px;           /* increased size */
+  font-weight: 600;           /* semi-bold for more emphasis */
+  line-height: 1.9;           /* slightly more spacing for readability */
+  color: rgba(255, 255, 255, 0.9); /* bright enough to stand out */
+  max-width: 720px;
+  margin: auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Show paragraph when active */
+.typed-paragraph.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media(max-width:1024px){
+  .typed-paragraph { font-size: 20px; }
+}
+
+@media(max-width:768px){
+  .typed-paragraph { font-size: 18px; }
+}
+
+@media(max-width:480px){
+  .typed-paragraph { font-size: 16px; }
+}
+
+}
+
+/* Cursor */
+.cursor {
+  font-weight: 700;
+  font-size: 60px;
+  color: #fff; /* white cursor for better visibility */
+  display: inline-block;
+  margin-left: 4px;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+/* Responsive */
+@media(max-width:1024px){
+  .typed-heading { font-size: 48px; }
+  .cursor { font-size: 48px; }
+}
+
+@media(max-width:768px){
+  .typed-heading { font-size: 32px; }
+  .cursor { font-size: 32px; }
+}
+
+@media(max-width:480px){
+  .typed-heading { font-size: 28px; }
+  .cursor { font-size: 28px; }
+}
+
+
+
+/* SECTIONS */
+section{opacity:0;transform:translateY(60px);transition:all 1s ease;}
+section.show{opacity:1;transform:translateY(0);}
+
+/* ABOUT */
+.about-page{
+  min-height:100vh;
+  padding:110px 10%;
+  color:#fff;
+  background:linear-gradient(135deg,#000,#111,#222);
+}
+.about-title{text-align:center;font-size:44px;letter-spacing:2px;}
+.about-subtitle{text-align:center;margin:20px 0 40px;color:#bbb;}
+.about-block{max-width:900px;margin:auto;text-align:center;margin-bottom:60px;}
+.about-block h2{margin-bottom:20px;}
+.mission-vision{display:flex;gap:30px;margin-top:40px;}
+.mv-box{
+  flex:1;padding:35px;
+  border:1px solid rgba(255,255,255,0.3);
+  background:rgba(255,255,255,0.03);
+  opacity:0;transform:translateY(40px);
+  transition:all .8s ease;
+}
+.mv-box.show{opacity:1;transform:translateY(0);}
+.mv-box:hover{background:#fff;color:#000;transform:translateY(-12px);}
+
+/* SERVICES GRID */
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+  margin-top:50px;
+}
+.service-card{
+  padding:36px 32px;
+  border:2px solid #fff;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  transition:all .45s ease;
+  background:transparent;
+}
+.service-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:#fff;
+  transform:translateX(-100%);
+  transition:.45s ease;
+  z-index:-1;
+}
+.service-card:hover::before{transform:translateX(0);}
+.service-card:hover{
+  color:#000;
+  transform:translateY(-12px);
+  box-shadow:0 30px 60px rgba(0,0,0,.25);
+}
+.service-icon{
+  font-size:36px;
+  margin-bottom:18px;
+  display:inline-block;
+  transition:transform .45s ease, color .45s ease;
+}
+.service-card:hover .service-icon{
+  transform:scale(1.15) rotate(-4deg);
+}
+.service-card h4{
+  font-size:18px;
+  margin-bottom:12px;
+  font-weight:600;
+}
+.service-card p{
+  font-size:14px;
+  line-height:1.6;
+  opacity:.9;
+}
+
+/* CONTACT */
+.contact-page {
+  min-height:90vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:80px 10%;
+  background:linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  color:#fff;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.contact-container {
+  max-width:1100px;
+  width:100%;
+}
+.contact-title {
+  font-size:48px;
+  font-weight:700;
+  margin-bottom:15px;
+  letter-spacing:1px;
+  color:#00bfff;
+}
+.contact-subtitle {
+  font-size:18px;
+  color:rgba(255,255,255,0.7);
+  margin-bottom:50px;
+}
+.contact-cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+  gap:30px;
+  margin-bottom:40px;
+}
+.contact-card {
+  background:rgba(255,255,255,0.05);
+  border:2px solid rgba(255,255,255,0.2);
+  border-radius:20px;
+  padding:30px 20px;
+  transition:all 0.4s ease;
+  cursor:pointer;
+}
+.contact-card:hover {
+  background:#00bfff;
+  color:#fff;
+  transform:translateY(-10px);
+  box-shadow:0 15px 40px rgba(0,191,255,0.5);
+}
+.contact-card h3 {
+  margin:15px 0 10px;
+  font-size:22px;
+}
+.contact-card p {
+  font-size:16px;
+  color:inherit;
+}
+.contact-icon {
+  font-size:36px;
+  color:#00bfff;
+  transition:all 0.4s ease;
+}
+.contact-card:hover .contact-icon {
+  color:#fff;
+}
+
+/* Social Icons */
+.social-icons {
+  display:flex;
+  justify-content:center;
+  gap:25px;
+}
+.social-icons a {
+  width:50px;
+  height:50px;
+  border:2px solid #00bfff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#00bfff;
+  font-size:20px;
+  transition: all 0.4s ease;
+}
+.social-icons a:hover {
+  background:#00bfff;
+  color:#fff;
+  transform:translateY(-6px) scale(1.1);
+  box-shadow:0 8px 25px rgba(0,191,255,0.5);
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .menu-toggle{display:block;}
+  .nav-links{position:absolute;top:80px;left:0;width:100%;background:#000;flex-direction:column;display:none;}
+  .mission-vision{flex-direction:column;}
+  .contact-title{font-size:36px;}
+  .contact-subtitle{font-size:16px;}
+  .contact-cards{gap:20px;}
+  .contact-card{padding:25px 15px;}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <img src="https://res.cloudinary.com/dvawjogg8/image/upload/v1769703100/logo_yi5r6j.png">
+    <span class="brand-name">Moonlion Media</span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <i class="fa-solid fa-bars menu-toggle" onclick="toggleMenu()"></i>
+</nav>
+
+<div class="main-content" id="scrollArea">
+
+  <!-- SLIDER -->
+  <section id="home" class="slider show">
+  <div class="slide active"
+    style="background-image:url('https://res.cloudinary.com/dvawjogg8/image/upload/v1769702533/slide1_zcxaxi.webp')"></div>
+  <div class="slide"
+    style="background-image:url('https://res.cloudinary.com/dvawjogg8/image/upload/v1769702534/slide2_jziolu.jpg')"></div>
+
+  <!-- Typing Effect with Heading & Paragraph -->
+  <div class="typing-container">
+    <h3 class="typed-heading"></h3>
+    <p class="typed-paragraph"></p>
+    <span class="cursor">|</span>
+  </div>
+</section>
+
+  <!-- ABOUT US -->
+  <section id="about" class="about-page">
+    <h1 class="about-title">Moon Lion Media</h1>
+    <p class="about-subtitle">Results-driven digital marketing for brands that want to grow smarter and faster</p>
+
+    <div class="about-block">
+      <h2>Who We Are</h2>
+      <p>
+        Moon Lion Media is a results-driven digital marketing agency dedicated to helping
+        brands grow smarter and faster in today’s competitive digital landscape.
+        We combine creativity, strategy, and technology to deliver powerful end-to-end
+        digital solutions tailored to each client’s goals.
+      </p>
+    </div>
+
+    <div class="mission-vision">
+      <div class="mv-box">
+        <h3>Our Mission</h3>
+        <p>
+          To empower brands with innovative digital strategies, compelling content,
+          and cutting-edge technology that drive visibility, engagement,
+          and measurable growth.
+        </p>
+      </div>
+
+      <div class="mv-box">
+        <h3>Our Vision</h3>
+        <p>
+          To become a trusted digital growth partner for businesses by delivering
+          impactful, creative, and data-driven marketing solutions.
+        </p>
+      </div>
+    </div>
+    <div style="height:60px;"></div>
+
+    <!-- SERVICES -->
+    <div class="about-block">
+      <h2 class="section-title">What We Do</h2>
+    </div>
+
+    <div class="services-grid">
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card">
+        <i class="fa-solid fa-bullhorn service-icon"></i>
+        <h4>Social Media 360° Management</h4>
+        <p>End-to-end social media strategy including content planning, posting, community management, analytics, and growth optimization.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-pen-nib service-icon"></i>
+        <h4>Content Creation</h4>
+        <p>Scroll-stopping graphics, reels, videos, and storytelling that strengthen brand identity and drive engagement.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-video service-icon"></i>
+        <h4>Cinematic Photography & Videography</h4>
+        <p>Professional cinematic visuals crafted to showcase authenticity and elevate your brand’s visual presence.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-users service-icon"></i>
+        <h4>Influencer Marketing</h4>
+        <p>Strategic influencer partnerships that connect your brand with the right audience through authentic storytelling.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-code service-icon"></i>
+        <h4>Web Development</h4>
+        <p>Modern, responsive, and conversion-focused websites built to reflect your brand and business goals.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-brain service-icon"></i>
+        <h4>AI-Powered Solutions</h4>
+        <p>Intelligent automation and AI-driven tools that optimize workflows, targeting, and digital scalability.</p>
+      </div>
+
+      <!-- Additional Services -->
+      <div class="service-card">
+        <i class="fa-solid fa-chart-line service-icon"></i>
+        <h4>SEO & SEM Optimization</h4>
+        <p>Improve visibility and drive traffic with advanced search engine optimization and paid campaigns.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-envelope service-icon"></i>
+        <h4>Email Marketing</h4>
+        <p>Targeted campaigns that nurture leads, build relationships, and drive conversions effectively.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-hand-holding-dollar service-icon"></i>
+        <h4>Paid Ads & Retargeting</h4>
+        <p>Maximize ROI through precision-targeted paid advertising on social media and search platforms.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-mobile-screen-button service-icon"></i>
+        <h4>App & Software Solutions</h4>
+        <p>Design and development of mobile and web applications to enhance engagement and user experience.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-page">
+    <div class="contact-container">
+      <h1 class="contact-title">Get in Touch</h1>
+      <p class="contact-subtitle">We'd love to hear from you! Reach out for collaborations, questions, or digital growth strategies.</p>
+
+      <div class="contact-cards">
+        <div class="contact-card">
+          <i class="fa-solid fa-phone contact-icon"></i>
+          <h3>Call Us</h3>
+          <p>+94715609509</p>
+        </div>
+
+        <div class="contact-card">
+          <i class="fa-solid fa-envelope contact-icon"></i>
+          <h3>Email Us</h3>
+          <p>Tharindu@gmail.com</p>
+        </div>
+
+        <div class="contact-card">
+          <i class="fa-solid fa-map-marker-alt contact-icon"></i>
+          <h3>Visit Us</h3>
+          <p>Negombo, Sri Lanka</p>
+        </div>
+
+        <div class="contact-card">
+          <i class="fa-solid fa-clock contact-icon"></i>
+          <h3>Working Hours</h3>
+          <p>Mon - Fri: 9 AM - 6 PM</p>
+        </div>
+      </div>
+
+      <!-- Social Icons -->
+      <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php/?id=61586870851809" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/moonlion.media/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/company/111525309/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>© 2026 Moonlion Media</footer>
+
+<script>
+/* SLIDER */
+let slides=document.querySelectorAll(".slide");
+let index=0;
+setInterval(()=>{
+  slides[index].classList.remove("active");
+  index=(index+1)%slides.length;
+  slides[index].classList.add("active");
+},4500);
+
+/* MENU */
+function toggleMenu(){
+  const nav=document.getElementById("navLinks");
+  nav.style.display=nav.style.display==="flex"?"none":"flex";
+}
+
+/* SCROLL ANIMATIONS */
+const scrollArea=document.getElementById("scrollArea");
+const sections=document.querySelectorAll("section");
+const boxes=document.querySelectorAll(".mv-box, .service-card");
+
+scrollArea.addEventListener("scroll",()=>{
+  sections.forEach(sec=>{
+    const rect=sec.getBoundingClientRect();
+    if(rect.top<window.innerHeight-120){
+      sec.classList.add("show");
+    }
+  });
+
+  boxes.forEach((box,i)=>{
+    const rect=box.getBoundingClientRect();
+    if(rect.top<window.innerHeight-100){
+      setTimeout(()=>box.classList.add("show"),i*150);
+    }
+  });
+});
+
+const sectionsData = [
+  {
+    heading: "Who We Are",
+    paragraph: "Moon Lion Media is a results-driven digital marketing agency dedicated to helping brands grow smarter and faster. We combine creativity, strategy, and technology to deliver powerful end-to-end digital solutions tailored to each client’s goals."
+  },
+  {
+    heading: "Our Mission",
+    paragraph: "To empower brands with innovative digital strategies, compelling content, and cutting-edge technology that drive visibility, engagement, and measurable growth."
+  },
+  {
+    heading: "Our Vision",
+    paragraph: "To become a trusted digital growth partner for businesses by delivering impactful, creative, and data-driven marketing solutions."
+  }
+];
+
+const headingSpan = document.querySelector(".typed-heading");
+const paragraphP = document.querySelector(".typed-paragraph");
+
+let sectionIndex = 0;
+let charIndex = 0;
+const typingDelay = 100;
+const erasingDelay = 50;
+const newTextDelay = 2000;
+
+function typeHeading() {
+  const currentSection = sectionsData[sectionIndex];
+  if (charIndex < currentSection.heading.length) {
+    headingSpan.textContent += currentSection.heading.charAt(charIndex);
+    charIndex++;
+    setTimeout(typeHeading, typingDelay);
+  } else {
+    paragraphP.style.opacity = 1; // Show paragraph
+    paragraphP.textContent = currentSection.paragraph;
+    setTimeout(eraseHeading, newTextDelay);
+  }
+}
+
+function eraseHeading() {
+  paragraphP.style.opacity = 0; // Hide paragraph
+  if (charIndex > 0) {
+    headingSpan.textContent = headingSpan.textContent.substring(0, charIndex - 1);
+    charIndex--;
+    setTimeout(eraseHeading, erasingDelay);
+  } else {
+    sectionIndex = (sectionIndex + 1) % sectionsData.length;
+    setTimeout(typeHeading, typingDelay + 200);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(typeHeading, 1000);
+});
+
+</script>
+
+</body>
+</html>
